@@ -1,0 +1,26 @@
+global-styling:
+  version: VERSION
+  css:
+    base:
+      css/style.css: {}
+    theme:
+      css/font-awesome.min.css: {}
+    base:
+      css/base/elements.css: {}
+  js:
+    js/slick.min.js: {}
+    js/jquery.mobile.custom.min.js: {}
+    js/main.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once
+
+maintenance_page:
+  version: VERSION
+  css:
+    theme:
+      css/maintenance-page.css: {}
+  dependencies:
+    - system/maintenance
+    - news_portal/global-styling

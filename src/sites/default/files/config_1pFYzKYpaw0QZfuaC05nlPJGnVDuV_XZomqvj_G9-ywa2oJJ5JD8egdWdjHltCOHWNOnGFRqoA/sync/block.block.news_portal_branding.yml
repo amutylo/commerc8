@@ -1,0 +1,25 @@
+uuid: f5537912-d5a3-4972-aca8-4ee6cf0874ca
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - news_portal
+_core:
+  default_config_hash: NDwadleLD3YVSbDUaakxyYZyINYtkFtOVGShfq4kWy8
+id: news_portal_branding
+theme: news_portal
+region: sidebar_first
+weight: -8
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }

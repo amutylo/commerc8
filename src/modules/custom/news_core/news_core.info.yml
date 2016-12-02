@@ -1,0 +1,6 @@
+name: Base news module
+description: News general functionality.
+package: News
+
+type: module
+core: 8.x

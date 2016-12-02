@@ -1,0 +1,11 @@
+name: Like/Dislike
+type: module
+description: Add a Like and Dislike field on every entity (like content, comments etc) and Get instant statistics.
+# core: 8.x
+package: Content
+
+# Is change in database field type
+#version: '8.x-1.0'
+core: '8.x'
+#project: 'like_dislike'
+#datestamp: 1468658134

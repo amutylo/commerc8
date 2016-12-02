@@ -1,0 +1,14 @@
+buttons_size: 16
+additional_html: "<div class=\"share\">\r\n<a href=\"#\" class=\"share-toggle-btn\" title=\"Share in social\"><span>Share</span> <i class=\"fa fa-share-alt\" aria-hidden=\"true\"></i></a>\r\n                        <ul class=\"social-list\">\r\n                            <li><a class=\"a2a_button_facebook\" href=\"#\" title=\"Facebook\"><i class=\"fa fa-facebook\" aria-hidden=\"true\"></i></a></li>\r\n                            <li><a class=\"a2a_button_twitter\" href=\"#\" title=\"Twitter\"><i class=\"fa fa-twitter\" aria-hidden=\"true\"></i></a></li>\r\n                            <li><a class=\"a2a_button_google_plus\" href=\"#\" title=\"Google+\"><i class=\"fa fa-google-plus\" aria-hidden=\"true\"></i></a></li>\r\n                            <li><a class=\"a2a_button_linkedin\" href=\"#\" title=\"Linkedin\"><i class=\"fa fa-linkedin\" aria-hidden=\"true\"></i></a></li>\r\n                            <li><a class=\"a2a_button_pinterest\" href=\"#\" title=\"Pinterest\"><i class=\"fa fa-pinterest-p\" aria-hidden=\"true\"></i></a></li>\r\n                            <li><a class=\"a2a_button_email\" href=\"#\" title=\"Mail\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></a></li>\r\n                            <li><a class=\"a2a_dd\" href=\"https://www.addtoany.com/share\"><i class=\"fa fa-plus\" aria-hidden=\"true\"></i></a></li>\r\n                        </ul>\r\n</div>"
+additional_css: ''
+additional_js: ''
+universal_button: none
+custom_universal_button: ''
+universal_button_placement: before
+no_3p: false
+_core:
+  default_config_hash: 8aJF-FDdnrk-N2gLGWFQcLZIpuJZA0BE9NtgXTVJfVk
+display_in_nodecont: null
+display_in_teasers: null
+display_weight: null
+nodetypes: null

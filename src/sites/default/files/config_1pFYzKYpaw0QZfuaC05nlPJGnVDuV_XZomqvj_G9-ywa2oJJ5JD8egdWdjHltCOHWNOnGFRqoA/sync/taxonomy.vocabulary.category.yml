@@ -1,0 +1,9 @@
+uuid: 345fccf0-3e69-48c7-a4ea-64c698cff188
+langcode: en
+status: true
+dependencies: {  }
+name: Category
+vid: category
+description: ''
+hierarchy: 0
+weight: 0

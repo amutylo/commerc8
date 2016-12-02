@@ -1,0 +1,91 @@
+uuid: a978ffde-74fd-473c-bbb1-f45902497551
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.article.body
+    - field.field.node.article.field_image
+    - field.field.node.article.field_news_category
+    - field.field.node.article.field_news_portal_like
+    - field.field.node.article.field_source
+    - image.style.detail_page
+    - node.type.article
+  module:
+    - field_group
+    - image
+    - link
+    - news_formatters
+    - text
+    - user
+third_party_settings:
+  field_group:
+    group_social_share:
+      children:
+        - field_news_portal_like
+        - addtoany
+        - field_source
+      parent_name: ''
+      weight: 4
+      format_type: html_element
+      format_settings:
+        id: ''
+        classes: social-share
+        element: div
+        show_label: false
+        label_element: h3
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Social share'
+_core:
+  default_config_hash: 1x2VMLBhwpRPa-_Q_6J_ZN4QNazwCmP1dt01Zc-Iors
+id: node.article.default
+targetEntityType: node
+bundle: article
+mode: default
+content:
+  addtoany:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+  body:
+    type: text_default
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    label: hidden
+  field_image:
+    type: image
+    weight: 0
+    settings:
+      image_style: detail_page
+      image_link: ''
+    third_party_settings: {  }
+    label: hidden
+  field_news_category:
+    type: news_entity_reference_label
+    weight: 1
+    label: hidden
+    settings:
+      link: '1'
+      class: category-list
+    third_party_settings: {  }
+  field_news_portal_like:
+    weight: 4
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: news_like_hide_formatter
+  field_source:
+    weight: 6
+    label: inline
+    settings:
+      trim_length: 80
+      target: _blank
+      url_only: false
+      url_plain: false
+      rel: '0'
+    third_party_settings: {  }
+    type: link
+hidden:
+  links: true

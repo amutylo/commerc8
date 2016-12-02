@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>News Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+ <link rel="shortcut icon" href="images/site/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/jquery.fancybox.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+	<div class="wrapper">
+		<header>
+			<div class="header-mobile">
+				<div class="menu-toggle-btn">
+					<a href="#" class="menu-toggle-btn">
+						<i class="fa fa-bars" aria-hidden="true"></i>
+					</a>
+				</div>
+				<div class="mobile-search-show">
+					<a href="#" id="show-h-search"><i class="fa fa-search" aria-hidden="true"></i></a>
+				</div>
+				<div class="page-is">
+					<h1>Home Feed</h1>
+				</div>
+			</div>
+			<div class="h-search">
+				<input type="text" placeholder="What are you looking for?" />
+				<a href="#" class="h-search-btn desktop"><i class="fa fa-search" aria-hidden="true"></i></a>
+				<a href="#" class="h-search-btn mobile" id="hide-h-mobile"><i class="fa fa-times" aria-hidden="true"></i></a>
+				<div class="description">
+					Find news by text, date, keyword, event, location, or person.
+				</div>
+			</div>
+		</header>
+		<main class="main">
+			<div class="content">
+				<div class="news-outer">
+					<div class="news-wrapper">
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-1.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+								</div>
+								<a href="#" title="Lorem ipsum dolor sit amet"><h2 class="news-header">Lorem ipsum dolor sit amet</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										2 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										43
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-2.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+								</div>
+								<a href="#" title="Morbi lectus suscipit vel posuere porta vitae lorem"><h2 class="news-header">Morbi lectus suscipit vel posuere porta vitae lorem</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										4 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										7
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-1.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+								</div>
+								<a href="#" title="Lorem ipsum dolor sit amet"><h2 class="news-header">Lorem ipsum dolor sit amet</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										2 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										43
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-2.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+								</div>
+								<a href="#" title="Morbi lectus suscipit vel posuere porta vitae lorem"><h2 class="news-header">Morbi lectus suscipit vel posuere porta vitae lorem</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										4 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										7
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-1.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+								</div>
+								<a href="#" title="Lorem ipsum dolor sit amet"><h2 class="news-header">Lorem ipsum dolor sit amet</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										2 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										43
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-2.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+								</div>
+								<a href="#" title="Morbi lectus suscipit vel posuere porta vitae lorem"><h2 class="news-header">Morbi lectus suscipit vel posuere porta vitae lorem</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										4 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										7
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-1.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+								</div>
+								<a href="#" title="Lorem ipsum dolor sit amet"><h2 class="news-header">Lorem ipsum dolor sit amet</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										2 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										43
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-2.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+								</div>
+								<a href="#" title="Morbi lectus suscipit vel posuere porta vitae lorem"><h2 class="news-header">Morbi lectus suscipit vel posuere porta vitae lorem</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										4 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										7
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-1.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+								</div>
+								<a href="#" title="Lorem ipsum dolor sit amet"><h2 class="news-header">Lorem ipsum dolor sit amet</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Travel">Travel</a>, <a href="#" title="Entertainment">Entertainment</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										2 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										43
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="news-item">
+							<a href="#" class="img-link" title="Lorem ipsum dolor sit amet">
+								<img src="images/temp/news-img-2.jpg" alt="" />
+							</a>
+							<div class="news-item-description">
+								<div class="news-categories mobile">
+									<i class="fa fa-tag" aria-hidden="true"></i>
+									<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+								</div>
+								<a href="#" title="Morbi lectus suscipit vel posuere porta vitae lorem"><h2 class="news-header">Morbi lectus suscipit vel posuere porta vitae lorem</h2></a>
+								<div class="news-item-list">
+									<div class="news-categories desktop">
+										<i class="fa fa-tag" aria-hidden="true"></i>
+										<a href="#" title="Food">Food</a>, <a href="#" title="Health">Health</a>
+									</div>
+									<div class="news-time">
+										<i class="fa fa-clock-o" aria-hidden="true"></i>
+										4 days ago
+									</div>
+									<div class="news-comments">
+										<i class="fa fa-comment-o" aria-hidden="true"></i>
+										7
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+	<div class="sidebar">
+		<div class="logo">
+			<a href="#" title="Home Page">
+				<img src="images/site/logo.png" alt="News Portal" />
+			</a>
+		</div>
+		<div class="main-nav">
+			<form action="#">
+				<div class="nav-wrapper">
+					<ul>
+						<li class="home">
+							<a href="#" class="active l" title="Home feed">
+								<i class="fa fa-home" aria-hidden="true"></i>
+								 Home feed
+							</a>
+							<a href="#" class="settings" id="categories-settings" title="Categories settings">
+							 	<i class="fa fa-cog" aria-hidden="true"></i>
+						 	</a>
+						 	<div class="corner-top"></div>
+					 	</li>
+						<li>
+							<a href="#" title="Politics" class="s">
+								<i class="fa fa-university" aria-hidden="true"></i>
+								Politics
+							</a>
+						 	<div class="checkbox">
+						 		<input type="checkbox" id="category1" />
+						 		<label for="category1">
+						 			<i class="fa fa-check" aria-hidden="true"></i>
+						 		</label>
+						 	</div>
+						</li>
+						<li>
+							<a href="#" title="Business" class="m">
+								<i class="fa fa-pie-chart" aria-hidden="true"></i>
+								Business
+							</a>
+						 	<div class="checkbox">
+						 		<input type="checkbox" id="category2" />
+						 		<label for="category2">
+						 			<i class="fa fa-check" aria-hidden="true"></i>
+						 		</label>
+						 	</div>
+						</li>
+						<li>
+							<a href="#" title="Tech" class="m">
+								<i class="fa fa-cogs" aria-hidden="true"></i>
+								tech
+							</a>
+						 	<div class="checkbox">
+						 		<input type="checkbox" id="category3" />
+						 		<label for="category3">
+						 			<i class="fa fa-check" aria-hidden="true"></i>
+						 		</label>
+						 	</div>
+						</li>
+						<li>
+							<a href="#" title="Health" class="m">
+								<i class="fa fa-heartbeat" aria-hidden="true"></i>
+								Health
+							</a>
+						 	<div class="checkbox">
+						 		<input type="checkbox" id="category4" />
+						 		<label for="category4">
+						 			<i class="fa fa-check" aria-hidden="true"></i>
+						 		</label>
+						 	</div>
+						</li>
+						<li>
+							<a href="#" title="Science" class="l">
+								<i class="fa fa-flask" aria-hidden="true"></i>
+								Science
+						 	</a>
+						 	<div class="checkbox">
+						 		<input type="checkbox" id="category5" />
+						 		<label for="category5">
+						 			<i class="fa fa-check" aria-hidden="true"></i>
+						 		</label>
+						 	</div>
+						</li>
+						<li>
+							<a href="#" title="Entertainment" class="m">
+								<i class="fa fa-music" aria-hidden="true"></i>
+								Entertainment
+							</a>
+						 	<div class="checkbox">
+						 		<input type="checkbox" id="category6" />
+						 		<label for="category6">
+						 			<i class="fa fa-check" aria-hidden="true"></i>
+						 		</label>
+						 	</div>
+						</li>
+						<li>
+							<a href="#" title="Travel" class="m">
+								<i class="fa fa-subway" aria-hidden="true"></i>
+								Travel
+							</a>
+						 	<div class="checkbox">
+						 		<input type="checkbox" id="category7" />
+						 		<label for="category7">
+						 			<i class="fa fa-check" aria-hidden="true"></i>
+						 		</label>
+						 	</div>
+						</li>
+						<li>
+							<a href="#" title="Food" class="l">
+								<i class="fa fa-cutlery" aria-hidden="true"></i>
+								Food
+							</a>
+						 	<div class="checkbox">
+						 		<input type="checkbox" id="category8" />
+						 		<label for="category8">
+						 			<i class="fa fa-check" aria-hidden="true"></i>
+						 		</label>
+						 	</div>
+						</li>
+					</ul>
+				</div>
+				<div class="settings-description">
+					You must select at least 3 category to create your Home Feed!
+				</div>
+				<div class="btn-wrapper">
+					<input type="submit" value="Update Home Feed" disabled />
+				</div>
+			</form>
+		</div>
+		<div class="footer-aside-nav">
+			<ul>
+				<li>
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					<a href="#">About News Portal</a>
+				</li>
+				<li>
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					<a href="#">Contact Us</a>
+				</li>
+				<li>
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					<a href="#">Terms & Conditions</a>
+				</li>
+				<li>
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+					<a href="#">Cookies</a>
+				</li>
+			</ul>
+			<div class="copyright">&copy; 2016 <a href="#">News Portal</a>. All rights reserved.</div>
+		</div>
+	</div>
+	<a class="fancybox" rel="group" href="big_image_1.jpg"><img src="small_image_1.jpg" alt="" /></a>
+	<div class="customization-popup popup" id="popup">
+		<div class="popup-header">
+			<h3>Follow topics</h3>
+			<div class="popup-description">
+				Please, choose topics for your personal newsline (at least 3)
+			</div>
+		</div>
+		<form action="#" class="customization-form">
+			<ul class="categories-list">
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-1" />
+						<label  for="category-1">
+							Politics
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-2" />
+						<label  for="category-2">
+							Politics
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-3" />
+						<label  for="category-3">
+							Politics
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-4" />
+						<label  for="category-4">
+							Politics
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-5" />
+						<label  for="category-5">
+							Politics
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-6" />
+						<label  for="category-6">
+							Politics
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-7" />
+						<label  for="category-7">
+							Politics
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-8" />
+						<label  for="category-8">
+							Politics
+						</label>
+					</div>
+				</li>
+				<li>
+					<div class="checkbox-lable">
+						<input type="checkbox" id="category-9" />
+						<label  for="category-9">
+							Politics
+						</label>
+					</div>
+				</li>
+			</ul>
+			<div class="popup-submit-btn">
+				<input type="submit" value="Create home feed" />
+			</div>
+		</form>
+	</div>
+	<!-- scripts -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.fancybox.js"></script>
+	<script src="js/main.js"></script>
+</body>
+</html>

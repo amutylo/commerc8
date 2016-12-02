@@ -1,0 +1,32 @@
+uuid: 0533313e-dbd4-401f-a44d-f8913c82d2f2
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.most_popular_custom
+  module:
+    - node
+    - views
+  theme:
+    - news_portal
+id: views_block__most_popular_custom_block_mostpopular_custom
+theme: news_portal
+region: sidebar_second
+weight: 0
+provider: null
+plugin: 'views_block:most_popular_custom-block_mostpopular_custom'
+settings:
+  id: 'views_block:most_popular_custom-block_mostpopular_custom'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+visibility:
+  node_type:
+    id: node_type
+    bundles:
+      article: article
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

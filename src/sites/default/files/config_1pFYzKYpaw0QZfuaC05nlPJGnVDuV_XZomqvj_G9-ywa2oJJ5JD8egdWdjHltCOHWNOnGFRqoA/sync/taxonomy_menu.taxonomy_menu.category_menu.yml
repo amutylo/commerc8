@@ -1,0 +1,11 @@
+uuid: 4ea0e3c8-5eb6-4894-84ce-7c52e350553c
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.category-menu
+    - taxonomy.vocabulary.category
+id: category_menu
+label: 'Category Menu'
+vocabulary: category
+menu: category-menu

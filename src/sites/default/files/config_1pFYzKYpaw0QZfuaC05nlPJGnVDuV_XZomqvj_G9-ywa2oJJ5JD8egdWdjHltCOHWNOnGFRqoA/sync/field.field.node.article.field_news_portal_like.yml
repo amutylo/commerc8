@@ -1,0 +1,25 @@
+uuid: 6f519788-80f9-48aa-9494-cef3676bf4a1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_news_portal_like
+    - node.type.article
+  module:
+    - like_dislike
+id: node.article.field_news_portal_like
+field_name: field_news_portal_like
+entity_type: node
+bundle: article
+label: news_portal_like
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    likes: '0'
+    dislikes: '0'
+    clicked_by: null
+default_value_callback: ''
+settings: {  }
+field_type: like_dislike

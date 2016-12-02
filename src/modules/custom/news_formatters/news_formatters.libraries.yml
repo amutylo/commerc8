@@ -1,0 +1,7 @@
+# Script for change time zone.
+news_formatters.scripts:
+  js:
+    js/news_formatters.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

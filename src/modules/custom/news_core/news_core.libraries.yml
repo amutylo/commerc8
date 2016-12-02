@@ -1,0 +1,8 @@
+# Script for news line form.
+news_core.scripts:
+  js:
+    js/news_line.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal.dialog.ajax
+    - core/jquery.cookie

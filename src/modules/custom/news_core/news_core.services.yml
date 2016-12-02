@@ -1,0 +1,5 @@
+services:
+    route_subscriber:
+        class: Drupal\news_core\Routing\RouteSubscriber
+        tags:
+          - {name: event_subscriber }

@@ -1,0 +1,4 @@
+news_core_base_field: field_news_category
+news_core_line_form_count: '2'
+news_core_base_date_format: html_date
+news_core_user_category_field: ''

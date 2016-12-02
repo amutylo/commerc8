@@ -1,0 +1,14 @@
+uuid: 77e9bf79-dcff-4624-86e5-54e3e820dbc1
+langcode: en
+status: true
+dependencies: {  }
+name: detail_page
+label: 'Detail page'
+effects:
+  d79f85e7-220b-40ba-8064-05fb1ebf1bb3:
+    uuid: d79f85e7-220b-40ba-8064-05fb1ebf1bb3
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1150
+      height: 444

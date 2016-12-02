@@ -1,0 +1,12 @@
+news_core.admin_config_development:
+  route_name: news_core.admin_config_development
+  parent: system.admin_config
+  title: News Portal settings
+  description: 'Custom configurations for news portal.'
+  weight: -10
+news_core.admin_form:
+  title: 'News settings'
+  parent: news_core.admin_config_development
+  description: 'Configure news core module.'
+  route_name: news_core.admin_form
+  weight: -10

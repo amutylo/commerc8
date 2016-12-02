@@ -1,0 +1,15 @@
+name: 'EU Cookie Compliance'
+type: module
+description: 'This module aims at making the website compliant with the new EU cookie regulation'
+package: custom
+# core: 8.x
+configure: eu_cookie_compliance.settings
+dependencies:
+  - filter
+  - ip2country
+
+# Add check country on EU in eu_cookie_compliance.module and ip2country dependencies
+#version: '8.x-1.0-beta7'
+core: '8.x'
+#project: 'eu_cookie_compliance'
+#datestamp: 1471262940

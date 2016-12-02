@@ -1,0 +1,33 @@
+domain: ''
+domains_option: 1
+domains_list: ''
+eu_only: false
+exclude_paths: "/admin\r\n/admin/*\r\n/batch\r\n/node/add*\r\n/node/*/*\r\n/user/*/*"
+export:
+  folder: custom
+langcode: en
+popup_agreed:
+  value: '<h2>Thank you for accepting cookies</h2><p>You can now hide this message or find out more about cookies.</p>'
+  format: restricted_html
+popup_agree_button_message: 'YES, I AGREE'
+popup_agreed_enabled: false
+popup_bg_hex: 0779BF
+popup_clicking_confirmation: false
+popup_delay: 1
+popup_disagree_button_message: 'NO, I WANT TO FIND OUT MORE'
+popup_enabled: true
+popup_find_more_button_message: 'More info'
+popup_height: null
+popup_hide_agreed: false
+popup_hide_button_message: Hide
+popup_info:
+  value: '<h2>We use cookies on this site to enhance your user experience</h2><p>By clicking any link on this page you are giving your consent for us to set cookies.</p>'
+  format: restricted_html
+popup_link: 'http://news-portal.lc/node/10'
+popup_link_new_window: false
+popup_position: true
+popup_text_hex: ffffff
+popup_width: 100%
+eu_countries: 'BE,BG,CZ,DK,DE,EE,IE,EL,ES,FR,IT,CY,LV,UK,LT,LU,HU,MT,NL,AT,PL,PT,RO,SI,SK,FI,SE'
+_core:
+  default_config_hash: sm3qkiW5AZYOB_-5gQwKc_E5t3-3y46eenDt5F5yaHA

@@ -1,0 +1,17 @@
+uuid: 4e8c2032-972c-4c6b-ac9c-b288aa344df5
+langcode: en
+status: true
+dependencies:
+  module:
+    - search_api_db
+id: database_server
+name: 'Database server'
+description: ''
+backend: search_api_db
+backend_config:
+  database: 'default:default'
+  min_chars: 1
+  partial_matches: true
+  autocomplete:
+    suggest_suffix: true
+    suggest_words: true

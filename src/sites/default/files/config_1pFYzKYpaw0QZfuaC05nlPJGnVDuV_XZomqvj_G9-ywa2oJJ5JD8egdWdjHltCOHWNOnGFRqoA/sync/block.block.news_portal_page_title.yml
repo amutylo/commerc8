@@ -1,0 +1,31 @@
+uuid: 81d1ef51-3caf-402c-aab5-79ed8dcee7ba
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_class
+    - system
+  theme:
+    - news_portal
+third_party_settings:
+  block_class:
+    classes: ''
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: news_portal_page_title
+theme: news_portal
+region: content
+weight: -7
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "<front>\r\n/taxonomy/term/*\r\n/node/*"
+    negate: true
+    context_mapping: {  }

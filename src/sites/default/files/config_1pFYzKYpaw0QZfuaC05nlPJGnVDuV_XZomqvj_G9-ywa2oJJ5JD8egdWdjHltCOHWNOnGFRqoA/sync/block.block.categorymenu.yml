@@ -1,0 +1,29 @@
+uuid: 296af3ea-a380-455c-9d24-ee0102fe9bae
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.category-menu
+  module:
+    - system
+  theme:
+    - news_portal
+id: categorymenu
+theme: news_portal
+region: '-1'
+weight: -9
+provider: null
+plugin: 'system_menu_block:category-menu'
+settings:
+  id: 'system_menu_block:category-menu'
+  label: 'Category Menu'
+  provider: system
+  label_display: '0'
+  level: 1
+  depth: 0
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

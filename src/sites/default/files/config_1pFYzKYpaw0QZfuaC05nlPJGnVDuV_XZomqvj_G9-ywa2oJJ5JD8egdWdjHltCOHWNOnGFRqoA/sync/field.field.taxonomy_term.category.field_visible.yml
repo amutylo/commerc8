@@ -1,0 +1,23 @@
+uuid: 9ad922c1-367e-462d-89bc-f5957ed51119
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_visible
+    - taxonomy.vocabulary.category
+id: taxonomy_term.category.field_visible
+field_name: field_visible
+entity_type: taxonomy_term
+bundle: category
+label: Visibility
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

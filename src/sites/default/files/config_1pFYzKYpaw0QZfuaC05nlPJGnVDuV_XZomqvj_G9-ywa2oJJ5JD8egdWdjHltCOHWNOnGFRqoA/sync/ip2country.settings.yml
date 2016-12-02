@@ -1,0 +1,8 @@
+watchdog: false
+rir: arin
+md5_checksum: false
+update_interval: 0
+debug: false
+test_type: 0
+test_country: AF
+test_ip_address: 127.0.0.1

@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Default theme implementation to list_element.
+ *
+ * Available variables:
+ * - element: Element that will be rendered.
+ * - element['content'] : content
+ *
+ * @ingroup themeable
+ */
+#}
+
+<div {{ attributes }}>
+  <ul>
+    {% for item in element.content %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
+</div>

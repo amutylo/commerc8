@@ -1,0 +1,10 @@
+name: News Field Formatter
+type: module
+description: Adding new field formatter for like/dislike implementations.
+package: News
+core: 8.x
+dependencies:
+  - field
+  - like_dislike
+  - news_core
+

@@ -1,0 +1,12 @@
+uuid: 4f094e7a-c8af-4be5-9420-359819699cf3
+langcode: en
+status: true
+dependencies: {  }
+id: contact_form
+label: 'Contact form'
+recipients:
+  - dkiiashko@webcodin.com
+reply: ''
+weight: 0
+message: ''
+redirect: /

@@ -1,0 +1,18 @@
+uuid: 20f8c20a-f183-4e0d-82a3-02487380fe2f
+langcode: en
+status: false
+dependencies:
+  theme:
+    - news_portal
+id: newslineblock
+theme: news_portal
+region: '-1'
+weight: -6
+provider: null
+plugin: newsline_block
+settings:
+  id: newsline_block
+  label: 'NewsLine block'
+  provider: news_core
+  label_display: visible
+visibility: {  }

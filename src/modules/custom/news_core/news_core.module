@@ -1,0 +1,574 @@
+<?php
+
+/**
+ * @file
+ */
+
+
+use Drupal\Core\Url;
+use Drupal\user\Entity\User;
+use Drupal\Core\Render\Element;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Component\Utility\Xss;
+
+/**
+ * Category taxonomy id.
+ */
+define('NEWS_CORE_TAXONOMY_VID', 'category');
+
+/**
+ * Cookies key.
+ */
+define('NEWS_CORE_COOKIES_KEY', 'personalized_news_line');
+
+/**
+ * Implements hook_theme().
+ */
+function news_core_theme() {
+  return [
+    'list_container' => [
+      'render element' => 'element',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function news_core_page_attachments(&$page) {
+  $page['#attached']['library'][] = 'news_core/news_core.scripts';
+  $page['#attached']['drupalSettings']['news_core'] = array(
+    'feedUrl' => $url = Url::fromRoute('news_core.news_line_form', array(), array(
+      'query' => array(
+        'destination' => \Drupal::service('path.current')->getPath()
+      ),
+      'absolute' => TRUE,
+    ))->toString(),
+    'isAnonymous' => \Drupal::currentUser()->isAnonymous(),
+    'validateCount' => news_core_get_module_config('news_core_line_form_count'),
+    'cookiesName' => 'Drupal.visitor.' . NEWS_CORE_COOKIES_KEY,
+  );
+
+}
+
+/**
+ * Implements hook_views_query_alter().
+ *
+ * @param \Drupal\views\ViewExecutable $view
+ * @param \Drupal\views\Plugin\views\query\Sql $query
+ */
+function news_core_views_query_alter($view, $query) {
+  if ($view->id() == 'front' || $view->id() == 'most_popular_custom') {
+    $categories = news_core_get_user_home_feed();
+    $field_name = news_core_get_module_config('news_core_base_field');
+    if (!empty($categories) && $field_name) {
+      $params = array(
+        'table' => 'node__' . $field_name,
+        'left_table' => 'node_field_data',
+        'left_field' => 'nid',
+        'field' => 'entity_id'
+      );
+      $join = new Drupal\views\Plugin\views\join\JoinPluginBase($params, $view->id(), array());
+      $query->addRelationship($field_name, $join, 'node');
+      $query->addWhere(2, $field_name . '.' . $field_name . '_target_id', array_keys($categories), 'IN');
+    }
+  }
+}
+
+/**
+ * Get stored configs.
+ *
+ * @param null $key
+ * @return array|\Drupal\Core\Config\ImmutableConfig|mixed|null
+ */
+function news_core_get_module_config($key = NULL) {
+  $config = \Drupal::config('news_core.settings');
+
+  if ($key) {
+    if (!$result = $config->get($key)) {
+      //drupal_set_message(t('The setting key <strong>@setting_name</strong> doesn\'t allow!', array('@setting_name' => $key)), 'error');
+    }
+    return $result;
+  }
+
+  return $config;
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function news_core_preprocess_node(&$variables) {
+  $node_type = $variables['node']->getType();
+  if ('article' == $node_type) {
+    $items = array(
+      '#type' => 'container',
+      '#attributes' => array(
+        'class' => array('news-item-list')
+      )
+    );
+    if ($date_format = news_core_get_module_config('news_core_base_date_format')) {
+      $date = $variables['node']->getCreatedTime();
+      $items['time'] = array(
+        '#type' => 'container',
+        '#attributes' => array(
+          'class' => array('news-time')
+        )
+      );
+      $items['time'][] = array(
+        '#markup' => new FormattableMarkup('<i class="fa fa-clock-o" aria-hidden="true"></i> @date', array(
+          '@date' => \Drupal::service('date.formatter')->format($date, $date_format)
+        )),
+      );
+    }
+
+    foreach ($variables['node']->getFieldDefinitions() as $field_name => $definition) {
+      if ($definition->getType() == 'like_dislike') {
+        $items['like'] = array(
+          '#type' => 'container',
+          '#attributes' => array(
+            'class' => array('news-comments')
+          )
+        );
+        if (!in_array($variables['node']->id(), news_core_get_cookies('Drupal_visitor_' . 'liked_news'))) {
+          $items['like']['like_url'] = array(
+            '#markup' => new FormattableMarkup('<a class="use-ajax Like not-liked" title="Like" href="@like_url"><i class="fa fa-heart-o" aria-hidden="true"></i></a> <div>@count</div>', array(
+              '@count' => news_core_get_field_value($variables['node'], $field_name, 'likes'),
+              '@like_url' => \Drupal::service('news_formatters.helper')->generateLikeUrl($variables['node'])
+            )),
+          );
+        }
+        else {
+          $items['like']['like_url'] = array(
+            '#markup' => new FormattableMarkup('<i class="fa fa-heart-o" aria-hidden="true"></i> <div>@count</div>', array(
+              '@count' => news_core_get_field_value($variables['node'], $field_name, 'likes'),
+            )),
+          );
+        }
+        break;
+      }
+    }
+
+    $variables['content']['news_module_links'] = array(
+      '#markup' => render($items),
+    );
+  }
+}
+
+/**
+ * Alter description message via hook_form_form_id_alter.
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ */
+function news_core_form_taxonomy_term_category_delete_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $entity = $form_state->getFormObject()->getEntity();
+  $tid = news_core_get_field_value($entity, 'tid', 'value');
+  $content_type = news_core_get_module_config('news_core_base_type');
+
+  if ($content_type) {
+    if (news_core_taxonomy_select_nodes($tid, 1, $content_type)) {
+      $additional = "<b> Any content which linked to this term will be deleted, unless its linked to multiply terms.</b>";
+      $description = $form['description']['#markup']->getUntranslatedString();
+      $form['description'] = array (
+        '#markup' => t($description . $additional)
+      );
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_delete() for taxonomy_term entities.
+ * @param \Drupal\taxonomy\Entity\Term $term
+ */
+function news_core_taxonomy_term_delete(\Drupal\taxonomy\Entity\Term $term) {
+  if ($content_type = news_core_get_module_config('news_core_base_type')) {
+    $tid = $term->id();
+    $attached_nodes = news_core_taxonomy_select_nodes($tid, FALSE, $content_type);
+    //Loop through and set each status to 0 (unpublished);
+    foreach ($attached_nodes as $nid) {
+      $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+      $terms = $node->field_news_category->getValue();
+      if (count($terms) == 1) {
+        $node->delete();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for taxonomy_term entities.
+ * @param \Drupal\taxonomy\Entity\Term $term
+ */
+function news_core_taxonomy_term_update(\Drupal\taxonomy\Entity\Term $term) {
+  if ($content_type = news_core_get_module_config('news_core_base_type')) {
+    $tid = $term->id();
+    $vis = news_core_get_field_value($term, 'field_visible', 'value');
+    if ($vis === 0) {
+      $nids = news_core_taxonomy_select_nodes($tid, FALSE, $content_type);
+      foreach ($nids as $nid) {
+        $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+        if ($node->isPublished()) {
+          $node->setPublished(0);
+          $node->save();
+        }
+      }
+    }
+    else {
+      $nids = news_core_taxonomy_select_nodes_unpublished($tid, FALSE, $content_type);
+      if (!empty($nids)) {
+        $field_name = news_core_get_module_config('news_core_base_field');
+        foreach ($nids as $nid) {
+          $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+          $term_values = news_core_get_field_value($node, $field_name, 'target_id');
+          $terms = \Drupal\taxonomy\Entity\Term::loadMultiple((array) $term_values);
+
+          $keep_hidden = FALSE;
+          //traverse through all terms and check if any of it has field_visible set to 0
+          foreach ($terms as $term) {
+            $is_visible = news_core_get_field_value($term, 'field_visible', 'value');
+            if ($is_visible === 0) {
+              $keep_hidden = TRUE;
+              break;
+            }
+          }
+          if ($keep_hidden) {
+            continue;
+          }
+          else {
+            $node->setPublished(1);
+            $node->save();
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Get nodes by term id.
+ * @param $tid
+ * @param bool $limit
+ * @param null $node_type
+ * @return array
+ */
+function news_core_taxonomy_select_nodes($tid, $limit = FALSE, $node_type = NULL) {
+
+  if (!\Drupal::getContainer()->get('config.factory')->get('taxonomy.settings')->get('maintain_index_table')) {
+    return array();
+  }
+
+  $query = \Drupal::database()->select('taxonomy_index', 't');
+  $query->fields('t', ['nid', 'tid']);
+  $query->addTag('node_access');
+  $query->addMetaData('base_table', 'taxonomy_index');
+  $query->join('node', 'n', 'n.nid = t.nid');
+  $query->condition('tid', $tid);
+  $query->condition('type', $node_type);
+
+  if ($limit !== FALSE) {
+    $query->range(0, $limit);
+  }
+
+  $nodes = $query->execute()->fetchCol();
+
+  return $nodes;
+}
+
+/**
+ * Get unpublished nodes by term id;
+ * @param $tid
+ * @param bool $limit
+ * @param null $node_type
+ * @return mixed
+ */
+function news_core_taxonomy_select_nodes_unpublished($tid, $limit = FALSE, $node_type = NULL){
+  $query = \Drupal::database()->select('node__field_news_category', 'fns');
+  $query->fields('fns', ['entity_id', 'field_news_category_target_id']);
+  $query->join('node', 'n', 'n.nid = fns.entity_id');
+  $query->condition('field_news_category_target_id', $tid);
+  $query->condition('type', $node_type);
+
+  if ($limit !== FALSE) {
+    $query->range(0, $limit);
+  }
+
+  $nodes = $query->execute()->fetchCol();
+
+  return $nodes;
+}
+
+/**
+ * Get single value from field.
+ * @param $node
+ * @param $field_name
+ * @param null $key
+ * @return array|bool|mixed|null
+ */
+function news_core_get_field_value($node, $field_name, $key = NULL) {
+  $values = $node->$field_name->getValue();
+  $result = NULL;
+  if (is_array($values)) {
+    foreach ($values as $value) {
+      if ($key && isset($value[$key])) {
+        $result[] = $value[$key];
+      }
+      else {
+        $result[] = isset($value[0]) ? $value[0] : FALSE;
+      }
+    }
+
+    if (sizeof($result) == 1) {
+      return $result[0];
+    }
+    else {
+      return $result;
+    }
+  }
+  else {
+    if ($key && isset($value[$key])) {
+      $result = $value[$key];
+    }
+    else {
+      $result = isset($value[0]) ? $value[0] : FALSE;
+    }
+    return $result;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function news_core_form_taxonomy_overview_terms_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $property = $form_state->get(['taxonomy', 'vocabulary']);
+  if ($property->id() == NEWS_CORE_TAXONOMY_VID) {
+    //Add visibility row to taxonomy
+    $form['terms']['#header'][] = t('Visibility');
+    $children = Element::children($form['terms']);
+    foreach ($children as $key) {
+      $term = $form['terms'][$key]['#term'];
+      $term_visible = news_core_get_field_value($term, 'field_visible', 'value');
+      $form['terms'][$key]['visibility'] = [
+        '#markup' => ($term_visible === '1') ? t('Visible') : t('Hidden')
+      ];
+    }
+  }
+}
+
+/**
+ * Implement hook_views_pre_render
+ * @param \Drupal\views\ViewExecutable $view
+ */
+function news_core_views_pre_render(\Drupal\views\ViewExecutable $view){
+  if ($view->id() == 'search') {
+    $results = &$view->result;
+    $url = \Drupal::request()->query->all();
+    $params = UrlHelper::filterQueryParameters($url);
+    $stValue = array_values($params);
+    if (empty($stValue[0])) {
+      $results = array();
+    }
+    if (!empty($stValue[0])) {
+      $viewTitle = $view->getTitle();
+      $sanitVal = Xss::filter($stValue[0]);
+      $title = $viewTitle . " " . $sanitVal;
+      $view->setTitle($title);
+    }
+    if ($results) {
+      news_core_views_trimtitles($view);
+    }
+  }
+  elseif ('most_popular_custom' == $view->id()) {
+    news_core_views_trimtitles($view);
+  }
+  elseif ('front' == $view->id()) {
+    news_core_views_trimtitles($view);
+  }
+  elseif ('taxonomy_term' == $view->id()) {
+    news_core_views_trimtitles($view);
+  }
+}
+
+/**
+ * Implements hook_form_views_exposed_form_alter().
+ */
+function news_core_form_views_exposed_form_alter(&$form, &$form_state) {
+  switch ($form['#id']) {
+    case 'views-exposed-form-search-page-search':
+      $form['search-term']['#attributes']['placeholder'] = t('What are you looking for?');
+      $form['actions']['submit']['content']['#markup'] = '<i class="fa fa-search" aria-hidden="true"></i>';
+      break;
+  }
+}
+
+/**
+ * Add fontawesome icons to category menu links
+ * Implements hook_link_alter().
+ */
+function news_core_link_alter(&$variables) {
+  $url = $variables['url'];
+  // Return early where possible.
+  if ($url->isExternal()) {
+    return;
+  }
+  else {
+    $route_name = $url->getRouteName();
+    if ($route_name == 'entity.taxonomy_term.canonical') {
+      if (!isset($variables['options']['entity'])) {
+        $termId = $url->getRouteParameters();
+        $term = Drupal\taxonomy\Entity\Term::load($termId['taxonomy_term']);
+        $iconClass = news_core_get_field_value($term, 'field_icon', 'value');
+        $markup = new FormattableMarkup('<i class="fa ' . $iconClass . '" aria-hidden="true"></i> @title',
+          array('@title' => $variables['text']));
+        $variables['text'] = $markup;
+      }
+    }
+  }
+}
+
+/**
+ * Set cookies.
+ *
+ * @param $key
+ * @param $values
+ * @param $cookies_merge
+ */
+function news_core_set_cookies($key, $values, $cookies_merge = FALSE) {
+  if ($cookies_merge) {
+    $defaults = news_core_get_cookies('Drupal_visitor_' . $key);
+    $values = array_merge($defaults, $values);
+  }
+  user_cookie_save(array($key => json_encode($values)));
+}
+
+/**
+ * Get stored cookies.
+ *
+ * @param $key
+ * @return mixed|string
+ */
+function news_core_get_cookies($key) {
+  $request = \Drupal::request();
+  return $request->cookies->has($key) ? (array) json_decode($request->cookies->get($key), TRUE) : array();
+}
+
+/**
+ * Return user category.
+ */
+function news_core_get_user_home_feed($user_id = NULL) {
+  if ($user_id === NULL) {
+    $user_id = \Drupal::currentUser()->id();
+  }
+
+  if ($user = User::load($user_id)) {
+    if($field_name = news_core_get_module_config('news_core_user_category_field')) {
+      $field_values = $user->get($field_name)->getValue();
+      array_walk($field_values, function($val, $key) use(&$values){
+        $values[] = $val['target_id'];
+      });
+
+      if (!empty($values)) {
+        return $values;
+      }
+    }
+  }
+
+  return news_core_get_cookies('Drupal_visitor_' . NEWS_CORE_COOKIES_KEY);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function news_core_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if ('views_exposed_form' == $form_id && 'views-exposed-form-search-page-search' == $form['#id']) {
+    $form['actions']['submit']['#attributes'] = array(
+      'class' => array('h-search-btn', 'desktop')
+    );
+    $form['actions']['submit']['#suffix'] = '<a href="#" class="h-search-btn mobile" id="hide-h-mobile"><i class="fa fa-times" aria-hidden="true"></i></a>'
+      . '<div class="description">Find news by text</div>';
+  }
+}
+
+/**
+ * Common function to trim views results titles
+ * @param $view
+ */
+function news_core_views_trimtitles(&$view){
+  $trim = intval($field_name = news_core_get_module_config('news_core_trim'));
+  if ('search' == $view->id()) {
+    foreach ($view->result as $idx => &$row) {
+      $item = &$row->_item;
+      $origObj = $item->getOriginalObject();
+      $entity = $origObj->getValue();
+      $title = $entity->getTitle();
+      $trimmed = news_core_trim($title, $trim);
+      $entity->setTitle($trimmed);
+      $origObj->setValue($entity);
+      $item->setOriginalObject($origObj);
+    }
+  }
+  else {
+    foreach ($view->result as $idx => &$item) {
+      $entity = &$item->_entity;
+      $title = &$entity->title[0];
+      $text = $title->getValue();
+      $trimmed = news_core_trim($text['value'], $trim);
+      $title->setValue($trimmed);
+    }
+  }
+}
+
+/**
+ * Core trim function
+ * @param $text string of char to trim
+ * @param $limit length of char the text to be trimmed
+ * @param $trim_type 'char' or 'word'
+ * @return mixed|string
+ */
+function news_core_trim($text, $limit = 25){
+
+  // Strip out line breaks.
+  $output = preg_replace('/\n|\r|\t/m', ' ', $text);
+
+  // Strip out non-breaking spaces.
+  $output = str_replace('&nbsp;', ' ', $output);
+  $output = str_replace("\xc2\xa0", ' ', $output);
+
+  // Strip out extra spaces.
+  $output = trim(preg_replace('/\s\s+/', ' ', $output));
+  $output = news_core_truncate_combined($output, $limit);
+  return $output;
+}
+
+/**
+ * Truncate by char with word preserving
+ * @param $string
+ * @param $limit
+ * @param string $ellipsis
+ * @return string
+ */
+function news_core_truncate_combined($string, $limit, $ellipsis = ' ...') {
+  $parts = preg_split('/([\s\n\r]+)/', $string, null, PREG_SPLIT_DELIM_CAPTURE);
+  $parts_count = count($parts);
+  if( strlen($string) > $limit ) {
+    $length = 0;
+    $last_part = 0;
+    for (; $last_part < $parts_count; ++$last_part) {
+      $length += strlen($parts[$last_part]);
+      if ($length > $limit) {
+        break;
+      }
+    }
+
+    $text = implode(array_slice($parts, 0, $last_part));
+    $text = rtrim($text);
+    $text = rtrim($text, ',');
+    $text = rtrim($text, ':');
+    $text = rtrim($text, '-');
+    $text = rtrim($text, ';');
+    $text .= $ellipsis;
+    return $text;
+  }
+
+  return $string;
+}

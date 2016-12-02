@@ -1,0 +1,166 @@
+uuid: f561f1e4-2b9e-44d2-9550-7401f0925eab
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+    - taxonomy
+    - search_api
+    - comment
+    - node
+  config:
+    - field.storage.node.field_news_category
+    - field.storage.node.body
+    - search_api.server.database_server
+id: global_index
+name: 'Global index'
+description: ''
+read_only: false
+field_settings:
+  content_title:
+    label: Title
+    datasource_id: 'entity:node'
+    property_path: title
+    type: text
+    boost: !!float 21
+  content_type:
+    label: 'Content type'
+    datasource_id: 'entity:node'
+    property_path: type
+    type: string
+  content_status:
+    label: 'Publishing status'
+    datasource_id: 'entity:node'
+    property_path: status
+    type: boolean
+  user_name:
+    label: 'Authored by » User » Name'
+    datasource_id: 'entity:node'
+    property_path: 'uid:entity:name'
+    type: string
+    dependencies:
+      module:
+        - user
+  user_mail:
+    label: 'Authored by » User » Email'
+    datasource_id: 'entity:node'
+    property_path: 'uid:entity:mail'
+    type: string
+    dependencies:
+      module:
+        - user
+  name_taxonomy_term:
+    label: 'Category » Taxonomy term » Name'
+    datasource_id: 'entity:node'
+    property_path: 'field_news_category:entity:name'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.field_news_category
+      module:
+        - taxonomy
+  summary:
+    label: 'Body » Summary'
+    datasource_id: 'entity:node'
+    property_path: 'body:summary'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.body
+  body_processed:
+    label: 'Body » Processed text'
+    datasource_id: 'entity:node'
+    property_path: 'body:processed'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.body
+  summary_processed:
+    label: 'Body » Processed summary'
+    datasource_id: 'entity:node'
+    property_path: 'body:summary_processed'
+    type: string
+    dependencies:
+      config:
+        - field.storage.node.body
+  changed:
+    label: Changed
+    datasource_id: 'entity:node'
+    property_path: changed
+    type: date
+  body:
+    label: Body
+    datasource_id: 'entity:node'
+    property_path: body
+    type: text
+    dependencies:
+      config:
+        - field.storage.node.body
+processor_settings:
+  rendered_item:
+    plugin_id: rendered_item
+    settings: {  }
+  aggregated_field:
+    plugin_id: aggregated_field
+    settings: {  }
+  add_url:
+    plugin_id: add_url
+    settings: {  }
+  ignorecase:
+    plugin_id: ignorecase
+    settings:
+      fields:
+        - content_title
+        - content_type
+        - user_name
+        - user_mail
+        - name_taxonomy_term
+        - summary
+        - body_processed
+        - summary_processed
+        - body
+      weights:
+        preprocess_index: -10
+        preprocess_query: -10
+options:
+  index_directly: true
+  cron_limit: 50
+datasource_settings:
+  'entity:comment':
+    plugin_id: 'entity:comment'
+    settings:
+      bundles:
+        default: true
+        selected: {  }
+      languages:
+        default: true
+        selected: {  }
+  'entity:node':
+    plugin_id: 'entity:node'
+    settings:
+      bundles:
+        default: true
+        selected: {  }
+      languages:
+        default: true
+        selected: {  }
+  'entity:taxonomy_term':
+    plugin_id: 'entity:taxonomy_term'
+    settings:
+      bundles:
+        default: true
+        selected: {  }
+      languages:
+        default: true
+        selected: {  }
+  'entity:user':
+    plugin_id: 'entity:user'
+    settings:
+      languages:
+        default: true
+        selected: {  }
+tracker_settings:
+  default:
+    plugin_id: default
+    settings: {  }
+server: database_server

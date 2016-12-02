@@ -1,0 +1,7 @@
+services:
+  news_formatters.route_subscriber:
+    class: Drupal\news_formatters\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  news_formatters.helper:
+      class: Drupal\news_formatters\NewsFormattersHelper

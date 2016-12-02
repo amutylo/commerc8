@@ -1,0 +1,27 @@
+uuid: bc69a6d2-7368-4ed2-b533-0095169248bb
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.search
+  module:
+    - block_class
+    - views
+  theme:
+    - news_portal
+third_party_settings:
+  block_class:
+    classes: h-search
+id: exposedformsearchpage_search
+theme: news_portal
+region: header
+weight: -9
+provider: null
+plugin: 'views_exposed_filter_block:search-page_search'
+settings:
+  id: 'views_exposed_filter_block:search-page_search'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: 'Related news'
+visibility: {  }

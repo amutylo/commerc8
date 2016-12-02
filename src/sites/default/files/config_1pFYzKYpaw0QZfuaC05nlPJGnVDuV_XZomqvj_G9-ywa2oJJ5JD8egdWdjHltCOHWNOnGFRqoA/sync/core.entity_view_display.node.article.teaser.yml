@@ -1,0 +1,44 @@
+uuid: c274598b-e196-4239-9191-09ea766396ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.article.body
+    - field.field.node.article.field_image
+    - field.field.node.article.field_news_category
+    - field.field.node.article.field_news_portal_like
+    - field.field.node.article.field_source
+    - image.style.teaser_480x320
+    - node.type.article
+  module:
+    - news_formatters
+    - user
+_core:
+  default_config_hash: U8ghxJXn8JE2p6Q2wLpPWAxpz4r_8crL1LxtapSrHAE
+id: node.article.teaser
+targetEntityType: node
+bundle: article
+mode: teaser
+content:
+  field_image:
+    type: image_single
+    weight: 0
+    settings:
+      image_style: teaser_480x320
+      image_link: ''
+    third_party_settings: {  }
+    label: hidden
+  field_news_category:
+    type: entity_reference_label
+    weight: 1
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+hidden:
+  addtoany: true
+  body: true
+  field_news_portal_like: true
+  field_source: true
+  links: true

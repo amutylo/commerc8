@@ -1,0 +1,14 @@
+uuid: fc230761-9859-4373-8d5e-c75d9709a5d6
+langcode: en
+status: true
+dependencies: {  }
+name: teaser_480x320
+label: 'Teaser (480x320)'
+effects:
+  3bae5a3b-149e-4cfd-9c7d-78b5a4f0075c:
+    uuid: 3bae5a3b-149e-4cfd-9c7d-78b5a4f0075c
+    id: image_resize
+    weight: 2
+    data:
+      width: 480
+      height: 320

@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the Bartik theme.
+ */
+
+use Drupal\Core\Link;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function news_portal_preprocess_page(&$variables) {
+  $variables['copyright'] = t('© @current_year @link. All rights reserved.', array(
+    '@current_year' => date("Y"),
+    '@link' => Link::createFromRoute('News Portal', '<front>')->toString()
+  ));
+
+  $route_name = \Drupal::service('current_route_match')->getRouteName();
+  if ($route_name == 'system.404') {
+    $variables['page']['content']['message404']['#markup'] = '<div class="mess-404">Sorry, that page doesn’t exist! You can go back to <a href="/">home</a> page</div>';
+  }
+  elseif ($route_name == 'system.403') {
+    $variables['page']['content']['message404']['#markup'] = "<div class='mess-403'>Access to the page is forbidden. We are sorry, but you don't have access to the page you have requested."
+. "You can go back to <a href='/'>home</a> page or <a href='/user/login'>log</a> in here.";
+  }
+
+}
+
+/**
+ * Implements hook_preprocess_input().
+ */
+function news_portal_preprocess_input(&$variables) {
+  $variables['is_button'] = ($variables['element']['#type'] == 'submit' && !empty($variables['element']['content'])) ? TRUE : FALSE;
+}
+
+/**
+ * Hook_preprocess_block
+ * @param $variables
+ */
+function news_portal_preprocess_block(&$variables) {
+  if ('views_exposed_filter_block:search-page_search' == $variables['plugin_id']) {
+    unset($variables['#cache']['contexts']);
+    $variables['#cache']['max-age'] = 0;
+    unset($variables['content']['#cache']['contexts']);
+    $variables['content']['#cache']['max-age'] = 0;
+    //generate dynamic header for search exposed filter block in mobile view;
+    if (!empty($variables['configuration']['label_display'])) {
+      $request = \Drupal::request();
+      if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
+        $dynamic_title = \Drupal::service('title_resolver')->getTitle($request, $route);
+      }
+      if (!empty($dynamic_title)) {
+        $variables['custom_title'] = $dynamic_title;
+      }
+      else {
+        $variables['custom_title'] = 'home feed';
+      }
+    }
+  }
+  elseif ('views_block:most_popular_custom-block_mostpopular_custom' == $variables['plugin_id']){
+    //remove 'most popular' block from cache
+    unset($variables['#cache']['contexts']);
+    $variables['#cache']['max-age'] = 0;
+    unset($variables['content']['#cache']['contexts']);
+    $variables['content']['#cache']['max-age'] = 0;
+    unset($variables['content']['#cache']['tags']);
+  }
+}

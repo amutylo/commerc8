@@ -1,0 +1,24 @@
+uuid: 77709f39-2f9f-46fc-a571-64000edf7120
+langcode: en
+status: true
+dependencies:
+  module:
+    - block_class
+    - news_core
+  theme:
+    - news_portal
+third_party_settings:
+  block_class:
+    classes: ''
+id: homefeedblock
+theme: news_portal
+region: main_nav
+weight: 0
+provider: null
+plugin: home_feed_block
+settings:
+  id: home_feed_block
+  label: 'Home feed block'
+  provider: news_core
+  label_display: '0'
+visibility: {  }

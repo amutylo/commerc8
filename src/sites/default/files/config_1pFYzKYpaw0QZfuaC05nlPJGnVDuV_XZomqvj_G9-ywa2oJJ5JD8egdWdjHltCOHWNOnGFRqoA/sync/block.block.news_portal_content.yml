@@ -1,0 +1,22 @@
+uuid: 6acd9915-cb2c-42e8-bb8f-f80cb8d3e495
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - news_portal
+_core:
+  default_config_hash: 9EoWV2Lot6FVSr50t4hoKgiz1LIXYWNG-IIPYsWxBqo
+id: news_portal_content
+theme: news_portal
+region: content
+weight: -4
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  provider: system
+  label_display: '0'
+visibility: {  }

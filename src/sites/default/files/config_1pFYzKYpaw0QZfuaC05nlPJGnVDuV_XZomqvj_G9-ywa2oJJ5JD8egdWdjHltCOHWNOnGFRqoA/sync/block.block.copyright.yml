@@ -1,0 +1,25 @@
+uuid: bd9607f4-99e3-4381-bffd-4288c63aaa8d
+langcode: en
+status: false
+dependencies:
+  content:
+    - 'block_content:basic:36e2a903-c239-4c60-9511-871366854104'
+  module:
+    - block_content
+  theme:
+    - news_portal
+id: copyright
+theme: news_portal
+region: '-1'
+weight: -2
+provider: null
+plugin: 'block_content:36e2a903-c239-4c60-9511-871366854104'
+settings:
+  id: 'block_content:36e2a903-c239-4c60-9511-871366854104'
+  label: Copyright
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility: {  }

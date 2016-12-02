@@ -1,0 +1,102 @@
+<?php
+
+/**
+ * @file
+ * Defines formatter for the like/dislike field.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function news_formatters_theme() {
+  return array(
+    'news_formatters' => array(
+      'variables' => array(
+        'likes' => NULL,
+        'dislikes' => NULL,
+      ),
+    ),
+    'news_formatters_hide' => array(
+      'variables' => array(
+        'like_url' => NULL,
+        'liked' => NULL,
+        'likes' => NULL,
+        'dislikes' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Check liked.
+ *
+ * @param $entity
+ * @param null $data
+ * @return bool
+ */
+function news_formatters_is_liked($entity, $data = NULL) {
+  $user_id = \Drupal::currentUser()->id();
+
+  if (is_object($data) && $user_id) {
+    $field_name = $data->field_name;
+    $users = json_decode($entity->$field_name->clicked_by);
+    return $users && isset($users->{$user_id});
+  }
+
+  return in_array($entity->id(), news_core_get_cookies('Drupal_visitor_' . 'liked_news'));
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function news_formatters_field_views_data_alter(array &$data, $field_storage) {
+  if ($field_storage->getType() == 'like_dislike') {
+    foreach ($data as $table_name => $table_data) {
+      foreach ($table_data as $field_name => $field_data) {
+        if (isset($field_data['field'])) {
+          $data[$table_name][$field_name]['field']['click sortable'] = TRUE;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function news_formatters_preprocess_node(&$variables) {
+  $variables['date_custom'] = $variables['node']->getCreatedTime();
+}
+
+/**
+ * @param $dateString
+ * @return mixed
+ */
+function news_formatters_js_date_format($dateString) {
+  $pattern = array ('/d/','/j/','/l/','/D/', '/F/','/M/','/n/','/m/', '/Y/','/y/','/H/','/i/');
+  $replace = array('dd','d','D','D', 'M','M','m','mm', 'Y','yy','HH','nn');
+
+  return preg_replace($pattern, $replace, $dateString);
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function news_formatters_page_attachments(&$page) {
+  if ($pattern = news_formatters_get_node_date_pattern()) {
+    $page['#attached']['library'][] = 'news_formatters/news_formatters.scripts';
+    $page['#attached']['drupalSettings']['news_formatters'] = array(
+      'date_formatter' => news_formatters_js_date_format($pattern),
+    );
+  }
+}
+
+/**
+ * Return date pattern.
+ */
+function news_formatters_get_node_date_pattern() {
+  if ($date_format = news_core_get_module_config('news_core_base_date_format')) {
+    return \Drupal::service('entity.manager')->getStorage('date_format')->load($date_format)->get('pattern');
+  }
+  return FALSE;
+}

@@ -1,0 +1,19 @@
+uuid: 99383f43-86fc-4a0c-8913-997677e2b8d2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_icon
+    - taxonomy.vocabulary.category
+id: taxonomy_term.category.field_icon
+field_name: field_icon
+entity_type: taxonomy_term
+bundle: category
+label: 'Class font icon'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Template file for news_formatters module.
+ */
+#}
+<div class="like">
+    {% if liked %}
+        <span class="Like liked" title="Like"><i class="fa fa-heart" aria-hidden="true"></i></span>
+    {% else %}
+        <a class="use-ajax Like not-liked" title="Like" href={{ like_url }}><i class="fa fa-heart" aria-hidden="true"></i></a>
+    {% endif %}
+    <span id="like" class="like-counter">{{ likes }}</span>
+</div>

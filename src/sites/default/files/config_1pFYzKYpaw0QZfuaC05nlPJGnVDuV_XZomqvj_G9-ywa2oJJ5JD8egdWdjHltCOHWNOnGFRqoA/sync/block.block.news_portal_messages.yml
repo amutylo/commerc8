@@ -1,0 +1,22 @@
+uuid: e8ed2aec-af4a-4717-a8a5-6399a403c68a
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - news_portal
+_core:
+  default_config_hash: KHQIJ7Vfl25lTjzIc7qIvnuistt-Mw2O0kG4jCofmkI
+id: news_portal_messages
+theme: news_portal
+region: content
+weight: -8
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  provider: system
+  label_display: '0'
+visibility: {  }

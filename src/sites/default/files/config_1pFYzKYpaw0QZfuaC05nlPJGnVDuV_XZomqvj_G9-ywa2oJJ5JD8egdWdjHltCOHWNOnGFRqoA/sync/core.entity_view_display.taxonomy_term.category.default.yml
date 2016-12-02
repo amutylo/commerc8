@@ -1,0 +1,17 @@
+uuid: 3d7ebf50-a554-47f9-b0c8-49f3264285ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.category.field_icon
+    - field.field.taxonomy_term.category.field_visible
+    - taxonomy.vocabulary.category
+id: taxonomy_term.category.default
+targetEntityType: taxonomy_term
+bundle: category
+mode: default
+content: {  }
+hidden:
+  description: true
+  field_icon: true
+  field_visible: true
